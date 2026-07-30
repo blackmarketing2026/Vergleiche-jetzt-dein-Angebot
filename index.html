@@ -367,6 +367,12 @@
                 </div>
 
                 <div class="form-field full">
+                  <label for="offerPrice">Liegt Ihnen bereits ein Angebot vor? Preis in € <span class="optional">(optional)</span></label>
+                  <input type="number" id="offerPrice" name="offerPrice" min="0" step="0.01" inputmode="decimal" placeholder="z. B. 450" />
+                  <span class="field-hint">Dann vergleichen wir gezielt dagegen.</span>
+                </div>
+
+                <div class="form-field full">
                   <label for="email">E-Mail-Adresse*</label>
                   <input type="email" id="email" name="email" autocomplete="email" required />
                   <span class="field-error" data-error-for="email"></span>

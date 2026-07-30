@@ -129,6 +129,7 @@
       cleaningType: cleaningType,
       rooms: form.elements["rooms"].value.trim(),
       squareMeters: form.elements["squareMeters"].value.trim(),
+      offerPrice: form.elements["offerPrice"].value.trim(),
       consent: form.elements["consent"].checked,
     };
 

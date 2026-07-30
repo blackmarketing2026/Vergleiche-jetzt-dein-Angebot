@@ -17,6 +17,7 @@ function buildLeadMailHtml(lead) {
     ["Reinigungsart", lead.cleaningType && lead.cleaningType.length ? lead.cleaningType.join(", ") : "-"],
     ["Anzahl Räume", lead.rooms || "-"],
     ["Fläche", lead.squareMeters ? lead.squareMeters + " m²" : "-"],
+    ["Vorliegendes Angebot", lead.offerPrice ? lead.offerPrice + " €" : "-"],
   ];
 
   var rowsHtml = rows
@@ -55,6 +56,7 @@ function buildLeadMailText(lead) {
     "Reinigungsart: " + (lead.cleaningType && lead.cleaningType.length ? lead.cleaningType.join(", ") : "-"),
     "Anzahl Räume: " + (lead.rooms || "-"),
     "Fläche: " + (lead.squareMeters ? lead.squareMeters + " m²" : "-"),
+    "Vorliegendes Angebot: " + (lead.offerPrice ? lead.offerPrice + " €" : "-"),
     "Eingegangen am " + new Date().toLocaleString("de-DE"),
   ].join("\n");
 }

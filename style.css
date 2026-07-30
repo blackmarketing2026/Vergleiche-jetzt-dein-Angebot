@@ -755,6 +755,11 @@ summary:focus-visible {
   min-height: 1em;
 }
 
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
 .checkbox-group {
   display: flex;
   flex-wrap: wrap;

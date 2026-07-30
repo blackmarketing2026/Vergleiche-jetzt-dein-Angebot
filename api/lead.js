@@ -72,6 +72,7 @@ module.exports = async function handler(req, res) {
     cleaningType: cleaningType,
     rooms: body.rooms ? String(body.rooms).trim() : "",
     squareMeters: body.squareMeters ? String(body.squareMeters).trim() : "",
+    offerPrice: body.offerPrice ? String(body.offerPrice).trim() : "",
   };
 
   const { RESEND_API_KEY, LEAD_TO_EMAIL, LEAD_FROM_EMAIL } = process.env;
