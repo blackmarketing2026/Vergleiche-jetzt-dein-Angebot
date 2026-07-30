@@ -1,58 +1,97 @@
-// Vercel Serverless Function: POST /api/lead
-// Nimmt Formular-Daten von index.html entgegen und verschickt sie per E-Mail.
-// Benötigte Environment-Variablen (im Vercel-Dashboard setzen, nicht im Repo):
-//   RESEND_API_KEY       API-Key des E-Mail-Versanddienstes (resend.com)
-//   LEAD_RECIPIENT_EMAIL Empfänger-Adresse für neue Leads
-//   LEAD_SENDER_EMAIL    Verifizierte Absender-Adresse (z.B. anfrage@deine-domain.de)
+const nodemailer = require("nodemailer");
+const { buildLeadMailHtml, buildLeadMailText } = require("./_leadMailTemplate");
 
-const { renderLeadEmailHtml } = require("./_leadMailTemplate");
+const PHONE_PATTERN = /^[+0-9 ()/-]{6,20}$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateLead(body) {
+  const errors = {};
+
+  if (!body.name || String(body.name).trim().length < 2) {
+    errors.name = "Name ist ungültig.";
+  }
+  if (!body.location || String(body.location).trim().length < 2) {
+    errors.location = "Ort ist ungültig.";
+  }
+  if (!body.phone || !PHONE_PATTERN.test(String(body.phone).trim())) {
+    errors.phone = "Telefonnummer ist ungültig.";
+  }
+  if (!body.email || !EMAIL_PATTERN.test(String(body.email).trim())) {
+    errors.email = "E-Mail-Adresse ist ungültig.";
+  }
+  if (!body.consent) {
+    errors.consent = "Einwilligung fehlt.";
+  }
+
+  return errors;
+}
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({ error: "method_not_allowed" });
   }
 
-  const lead = req.body || {};
-
-  if (!lead.name || !lead.email || !lead.plz || !lead.datenschutzAkzeptiert) {
-    return res.status(400).json({ error: "Pflichtfelder fehlen" });
+  let body = req.body;
+  if (typeof body === "string") {
+    try {
+      body = JSON.parse(body);
+    } catch (err) {
+      return res.status(400).json({ error: "invalid_json" });
+    }
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const recipient = process.env.LEAD_RECIPIENT_EMAIL;
-  const sender = process.env.LEAD_SENDER_EMAIL;
+  if (!body || typeof body !== "object") {
+    return res.status(400).json({ error: "invalid_body" });
+  }
 
-  if (!apiKey || !recipient || !sender) {
-    console.error("E-Mail-Versand nicht konfiguriert: fehlende Environment-Variablen");
-    return res.status(500).json({ error: "Serverkonfiguration unvollständig" });
+  const errors = validateLead(body);
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({ error: "validation_failed", fields: errors });
+  }
+
+  const lead = {
+    name: String(body.name).trim(),
+    company: body.company ? String(body.company).trim() : "",
+    location: String(body.location).trim(),
+    phone: String(body.phone).trim(),
+    email: String(body.email).trim(),
+  };
+
+  const {
+    SMTP_HOST,
+    SMTP_PORT,
+    SMTP_USER,
+    SMTP_PASS,
+    LEAD_TO_EMAIL,
+    LEAD_FROM_EMAIL,
+  } = process.env;
+
+  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS || !LEAD_TO_EMAIL) {
+    console.error("Lead-Mailversand nicht konfiguriert: SMTP_HOST/SMTP_USER/SMTP_PASS/LEAD_TO_EMAIL fehlen.");
+    return res.status(500).json({ error: "mail_not_configured" });
   }
 
   try {
-    const emailResponse = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        from: sender,
-        to: recipient,
-        reply_to: lead.email,
-        subject: `Neue Reinigungs-Anfrage von ${lead.name} (${lead.plz})`,
-        html: renderLeadEmailHtml(lead)
-      })
+    const transporter = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: Number(SMTP_PORT) || 587,
+      secure: Number(SMTP_PORT) === 465,
+      auth: { user: SMTP_USER, pass: SMTP_PASS },
     });
 
-    if (!emailResponse.ok) {
-      const errorBody = await emailResponse.text();
-      console.error("Fehler beim E-Mail-Versand:", errorBody);
-      return res.status(502).json({ error: "E-Mail konnte nicht versendet werden" });
-    }
+    await transporter.sendMail({
+      from: LEAD_FROM_EMAIL || SMTP_USER,
+      to: LEAD_TO_EMAIL,
+      replyTo: lead.email,
+      subject: "Neue Anfrage: " + lead.name + " (" + lead.location + ")",
+      text: buildLeadMailText(lead),
+      html: buildLeadMailHtml(lead),
+    });
 
     return res.status(200).json({ ok: true });
-  } catch (error) {
-    console.error("Unerwarteter Fehler beim Lead-Versand:", error);
-    return res.status(500).json({ error: "Interner Fehler" });
+  } catch (err) {
+    console.error("Fehler beim Versand der Lead-E-Mail:", err);
+    return res.status(500).json({ error: "send_failed" });
   }
 };

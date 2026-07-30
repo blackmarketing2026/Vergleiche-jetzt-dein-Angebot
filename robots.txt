@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
-Sitemap: https://www.vergleiche-jetzt-dein-angebot.de/sitemap.xml
+Sitemap: https://www.example.de/sitemap.xml

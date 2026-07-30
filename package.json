@@ -1,0 +1,12 @@
+{
+  "name": "vergleiche-jetzt-dein-angebot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vergleichsseite für Gebäudereinigung – Lead-Formular mit E-Mail-Versand über Vercel Functions.",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  }
+}

@@ -1,32 +1,56 @@
-// Baustein: HTML-Mail-Template für eingehende Leads. Kein eigener Route-Endpunkt
-// (Unterstrich-Präfix), wird nur von api/lead.js importiert.
-
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
-function renderLeadEmailHtml(lead) {
-  const leistungen = lead.leistungen && lead.leistungen.length
-    ? lead.leistungen.map(escapeHtml).join(", ")
-    : "keine Angabe";
+function buildLeadMailHtml(lead) {
+  var rows = [
+    ["Name", lead.name],
+    ["Firma", lead.company || "-"],
+    ["Ort", lead.location],
+    ["Telefon", lead.phone],
+    ["E-Mail", lead.email],
+  ];
 
-  return `
-    <h2>Neue Reinigungs-Anfrage</h2>
-    <table cellpadding="6" cellspacing="0" border="0">
-      <tr><td><strong>Kundentyp</strong></td><td>${escapeHtml(lead.kundentyp || "-")}</td></tr>
-      <tr><td><strong>Gewünschte Leistungen</strong></td><td>${leistungen}</td></tr>
-      <tr><td><strong>Bestehendes Angebot?</strong></td><td>${escapeHtml(lead.hatAngebot || "-")}</td></tr>
-      <tr><td><strong>Details zum bestehenden Angebot</strong></td><td>${escapeHtml(lead.angebotDetails || "-")}</td></tr>
-      <tr><td><strong>PLZ / Ort</strong></td><td>${escapeHtml(lead.plz || "-")}</td></tr>
-      <tr><td><strong>Name</strong></td><td>${escapeHtml(lead.name || "-")}</td></tr>
-      <tr><td><strong>E-Mail</strong></td><td>${escapeHtml(lead.email || "-")}</td></tr>
-      <tr><td><strong>Telefon</strong></td><td>${escapeHtml(lead.telefon || "-")}</td></tr>
-      <tr><td><strong>Nachricht</strong></td><td>${escapeHtml(lead.nachricht || "-")}</td></tr>
-    </table>
-  `;
+  var rowsHtml = rows
+    .map(function (row) {
+      return (
+        '<tr><td style="padding:8px 12px;font-weight:600;color:#16212b;border-bottom:1px solid #dce3ea;">' +
+        escapeHtml(row[0]) +
+        '</td><td style="padding:8px 12px;color:#16212b;border-bottom:1px solid #dce3ea;">' +
+        escapeHtml(row[1]) +
+        "</td></tr>"
+      );
+    })
+    .join("");
+
+  return (
+    '<div style="font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:560px;margin:0 auto;">' +
+    '<h2 style="color:#1d4e89;">Neue Anfrage über das Vergleichsformular</h2>' +
+    '<table style="width:100%;border-collapse:collapse;margin-top:12px;">' +
+    rowsHtml +
+    "</table>" +
+    '<p style="color:#5c6b77;font-size:13px;margin-top:16px;">Eingegangen am ' +
+    new Date().toLocaleString("de-DE") +
+    " über vergleiche-jetzt-dein-angebot.</p>" +
+    "</div>"
+  );
 }
 
-module.exports = { renderLeadEmailHtml };
+function buildLeadMailText(lead) {
+  return [
+    "Neue Anfrage über das Vergleichsformular",
+    "Name: " + lead.name,
+    "Firma: " + (lead.company || "-"),
+    "Ort: " + lead.location,
+    "Telefon: " + lead.phone,
+    "E-Mail: " + lead.email,
+    "Eingegangen am " + new Date().toLocaleString("de-DE"),
+  ].join("\n");
+}
+
+module.exports = { buildLeadMailHtml: buildLeadMailHtml, buildLeadMailText: buildLeadMailText };
