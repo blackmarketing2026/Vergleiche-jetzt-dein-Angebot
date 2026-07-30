@@ -375,6 +375,7 @@ summary:focus-visible {
 .hero .container {
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
   align-items: center;
 }
@@ -663,6 +664,7 @@ summary:focus-visible {
 
 .form-wrap {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
   align-items: start;
 }
@@ -709,6 +711,7 @@ summary:focus-visible {
 
 .form-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-2);
 }
 
@@ -961,15 +964,15 @@ summary:focus-visible {
   }
 
   .hero .container {
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   }
 
   .form-wrap {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
   .form-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
   .form-grid .full {
