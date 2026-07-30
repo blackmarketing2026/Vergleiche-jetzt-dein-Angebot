@@ -114,12 +114,21 @@
       return;
     }
 
+    var cleaningType = Array.prototype.slice
+      .call(form.querySelectorAll('input[name="cleaningType"]:checked'))
+      .map(function (el) {
+        return el.value;
+      });
+
     var payload = {
       name: form.elements["name"].value.trim(),
       company: form.elements["company"].value.trim(),
       location: form.elements["location"].value.trim(),
       phone: form.elements["phone"].value.trim(),
       email: form.elements["email"].value.trim(),
+      cleaningType: cleaningType,
+      rooms: form.elements["rooms"].value.trim(),
+      squareMeters: form.elements["squareMeters"].value.trim(),
       consent: form.elements["consent"].checked,
     };
 

@@ -2,13 +2,39 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Consent Mode v2: Standardmäßig alle optionalen Cookies ablehnen -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MCZWBBZ7');</script>
+  <!-- End Google Tag Manager -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google-site-verification" content="tqYNbbVxKsISolY4JpDQ7Z16K_SXEEEKziOsKmOaSmQ" />
   <title>Kein Zugriff (403) – Vergleiche jetzt dein Angebot</title>
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" type="image/png" href="assets/logo.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCZWBBZ7"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <main class="error-page">
     <div class="container">
       <span class="eyebrow">Fehler 403</span>
@@ -17,5 +43,6 @@
       <a href="/" class="btn btn-primary">Zur Startseite</a>
     </div>
   </main>
+  <script src="cookie-consent.js"></script>
 </body>
 </html>

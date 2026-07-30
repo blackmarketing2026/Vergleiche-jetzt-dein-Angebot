@@ -50,12 +50,28 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: "validation_failed", fields: errors });
   }
 
+  const ALLOWED_CLEANING_TYPES = [
+    "Büroreinigung",
+    "Treppenhausreinigung",
+    "Praxisreinigung",
+    "Sonderreinigung",
+  ];
+
+  const cleaningType = Array.isArray(body.cleaningType)
+    ? body.cleaningType
+        .map((v) => String(v).trim())
+        .filter((v) => ALLOWED_CLEANING_TYPES.includes(v))
+    : [];
+
   const lead = {
     name: String(body.name).trim(),
     company: body.company ? String(body.company).trim() : "",
     location: String(body.location).trim(),
     phone: String(body.phone).trim(),
     email: String(body.email).trim(),
+    cleaningType: cleaningType,
+    rooms: body.rooms ? String(body.rooms).trim() : "",
+    squareMeters: body.squareMeters ? String(body.squareMeters).trim() : "",
   };
 
   const { RESEND_API_KEY, LEAD_TO_EMAIL, LEAD_FROM_EMAIL } = process.env;

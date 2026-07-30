@@ -2,7 +2,28 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Consent Mode v2: Standardmäßig alle optionalen Cookies ablehnen -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied',
+      'wait_for_update': 500
+    });
+  </script>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MCZWBBZ7');</script>
+  <!-- End Google Tag Manager -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google-site-verification" content="tqYNbbVxKsISolY4JpDQ7Z16K_SXEEEKziOsKmOaSmQ" />
   <title>Vergleiche jetzt dein Angebot – Kostenlose Vergleichsangebote für Gebäudereinigung</title>
   <meta name="description" content="Fordern Sie kostenlos und unverbindlich bis zu 3 Vergleichsangebote für Büroreinigung, Fensterreinigung, Treppenhausreinigung und weitere Reinigungsdienstleistungen an." />
   <link rel="icon" type="image/png" href="assets/logo.png" />
@@ -19,6 +40,10 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCZWBBZ7"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
   <header class="site-header">
     <div class="container">
@@ -309,6 +334,38 @@
                 </div>
 
                 <div class="form-field full">
+                  <label>Reinigungsart <span class="optional">(Mehrfachauswahl möglich, optional)</span></label>
+                  <div class="checkbox-group">
+                    <label class="checkbox-option">
+                      <input type="checkbox" name="cleaningType" value="Büroreinigung" />
+                      Büroreinigung
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" name="cleaningType" value="Treppenhausreinigung" />
+                      Treppenhausreinigung
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" name="cleaningType" value="Praxisreinigung" />
+                      Praxisreinigung
+                    </label>
+                    <label class="checkbox-option">
+                      <input type="checkbox" name="cleaningType" value="Sonderreinigung" />
+                      Sonderreinigung
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-field">
+                  <label for="rooms">Anzahl Räume <span class="optional">(optional)</span></label>
+                  <input type="number" id="rooms" name="rooms" min="0" inputmode="numeric" />
+                </div>
+
+                <div class="form-field">
+                  <label for="squareMeters">Fläche in m² <span class="optional">(optional)</span></label>
+                  <input type="number" id="squareMeters" name="squareMeters" min="0" inputmode="numeric" />
+                </div>
+
+                <div class="form-field full">
                   <label for="email">E-Mail-Adresse*</label>
                   <input type="email" id="email" name="email" autocomplete="email" required />
                   <span class="field-error" data-error-for="email"></span>
@@ -346,6 +403,7 @@
           <a href="https://cleanteam-solingen.de/impressum/" target="_blank" rel="noopener">Impressum</a>
           <a href="https://cleanteam-solingen.de/datenschutz/" target="_blank" rel="noopener">Datenschutz</a>
           <a href="agb.html">AGB</a>
+          <a href="#" id="cookieSettingsLink">Cookie-Einstellungen</a>
         </nav>
       </div>
 
@@ -357,5 +415,6 @@
   </footer>
 
   <script src="page.js"></script>
+  <script src="cookie-consent.js"></script>
 </body>
 </html>

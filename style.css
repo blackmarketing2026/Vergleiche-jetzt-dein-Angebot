@@ -755,6 +755,38 @@ summary:focus-visible {
   min-height: 1em;
 }
 
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.checkbox-option input {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: var(--color-accent);
+}
+
+.checkbox-option:has(input:checked) {
+  border-color: var(--color-accent);
+  background: var(--color-accent-light);
+}
+
 .consent-field {
   display: flex;
   gap: 0.6rem;
@@ -864,6 +896,112 @@ summary:focus-visible {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--space-2);
+}
+
+/* ---------- Cookie Banner ---------- */
+.cookie-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-3);
+  transform: translateY(110%);
+  transition: transform 0.3s ease;
+}
+
+.cookie-banner.is-visible {
+  transform: translateY(0);
+}
+
+.cookie-banner-inner {
+  max-width: 1140px;
+  margin-inline: auto;
+}
+
+.cookie-banner-text strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--color-text);
+}
+
+.cookie-banner-text p {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.cookie-banner-text a {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.cookie-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: var(--space-2);
+}
+
+.cookie-banner-actions .btn {
+  padding: 0.65rem 1.1rem;
+  font-size: 0.85rem;
+}
+
+.cookie-settings {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cookie-toggle {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.cookie-toggle input {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--color-accent);
+}
+
+.cookie-settings .btn {
+  margin-top: 0.2rem;
+}
+
+@media (min-width: 780px) {
+  .cookie-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .cookie-banner-text {
+    flex: 1 1 420px;
+  }
+
+  .cookie-banner-actions {
+    margin-top: 0;
+    flex: 0 0 auto;
+  }
+
+  .cookie-settings {
+    flex-basis: 100%;
+  }
 }
 
 /* ---------- Simple pages (Impressum/Datenschutz/AGB/Fehler) ---------- */

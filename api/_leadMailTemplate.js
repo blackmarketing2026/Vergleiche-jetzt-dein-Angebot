@@ -14,6 +14,9 @@ function buildLeadMailHtml(lead) {
     ["Ort", lead.location],
     ["Telefon", lead.phone],
     ["E-Mail", lead.email],
+    ["Reinigungsart", lead.cleaningType && lead.cleaningType.length ? lead.cleaningType.join(", ") : "-"],
+    ["Anzahl Räume", lead.rooms || "-"],
+    ["Fläche", lead.squareMeters ? lead.squareMeters + " m²" : "-"],
   ];
 
   var rowsHtml = rows
@@ -49,6 +52,9 @@ function buildLeadMailText(lead) {
     "Ort: " + lead.location,
     "Telefon: " + lead.phone,
     "E-Mail: " + lead.email,
+    "Reinigungsart: " + (lead.cleaningType && lead.cleaningType.length ? lead.cleaningType.join(", ") : "-"),
+    "Anzahl Räume: " + (lead.rooms || "-"),
+    "Fläche: " + (lead.squareMeters ? lead.squareMeters + " m²" : "-"),
     "Eingegangen am " + new Date().toLocaleString("de-DE"),
   ].join("\n");
 }
