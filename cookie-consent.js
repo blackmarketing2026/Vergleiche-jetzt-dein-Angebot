@@ -41,6 +41,32 @@
     });
   }
 
+  function toggleRow(id, label, description, opts) {
+    opts = opts || {};
+    var disabledAttr = opts.locked ? " checked disabled" : "";
+    var checkedAttr = opts.checked ? " checked" : "";
+    return (
+      '<div class="cookie-toggle-row">' +
+      '<div class="cookie-toggle-icon">' + opts.icon + "</div>" +
+      '<div class="cookie-toggle-info">' +
+      "<strong>" + label + "</strong>" +
+      "<span>" + description + "</span>" +
+      "</div>" +
+      '<label class="toggle-switch' + (opts.locked ? " is-locked" : "") + '">' +
+      '<input type="checkbox"' + (opts.locked ? disabledAttr : ' id="' + id + '"' + checkedAttr) + " />" +
+      '<span class="toggle-track"><span class="toggle-thumb"></span></span>' +
+      "</label>" +
+      "</div>"
+    );
+  }
+
+  var ICON_LOCK =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+  var ICON_CHART =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>';
+  var ICON_MEGAPHONE =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a2 2 0 0 0 2 2h1l3 6 2-1-2.5-5H12l7 4V5l-7 4H6a2 2 0 0 0-2 2Z"/><path d="M15 9v6"/></svg>';
+
   function buildBanner() {
     var wrap = document.createElement("div");
     wrap.id = "cookieBanner";
@@ -50,28 +76,24 @@
     wrap.innerHTML =
       '<div class="cookie-banner-inner">' +
       '<div class="cookie-banner-text">' +
-      "<strong>Cookie-Einstellungen</strong>" +
-      '<p>Wir nutzen technisch notwendige Cookies immer. Optionale Analyse- und Marketing-Cookies setzen wir erst mit Ihrer Zustimmung. Details in unserer <a href="https://cleanteam-solingen.de/datenschutz/" target="_blank" rel="noopener">Datenschutzerkl&auml;rung</a>.</p>' +
+      "<strong>Wir respektieren Ihre Privatsph&auml;re</strong>" +
+      '<p>Notwendige Cookies laufen immer. Analyse- und Marketing-Cookies setzen wir nur mit Ihrer Zustimmung. Details in unserer <a href="https://cleanteam-solingen.de/datenschutz/" target="_blank" rel="noopener">Datenschutzerkl&auml;rung</a>.</p>' +
       "</div>" +
       '<div class="cookie-banner-actions">' +
-      '<button type="button" class="btn btn-secondary" id="cookieOpenSettings">Einstellungen</button>' +
-      '<button type="button" class="btn btn-secondary" id="cookieRejectAll">Alle ablehnen</button>' +
-      '<button type="button" class="btn btn-primary" id="cookieAcceptAll">Alle akzeptieren</button>' +
+      '<button type="button" class="cookie-link-btn" id="cookieOpenSettings" aria-expanded="false" aria-controls="cookieSettings">' +
+      "Einstellungen" +
+      '<svg class="cookie-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+      "</button>" +
+      '<button type="button" class="btn btn-secondary" id="cookieRejectAll">Ablehnen, nur die Notwendigsten</button>' +
+      '<button type="button" class="btn btn-primary" id="cookieAcceptAll">Alles erlauben</button>' +
       "</div>" +
-      '<div class="cookie-settings" id="cookieSettings" hidden>' +
-      '<label class="cookie-toggle">' +
-      "<span><strong>Notwendig</strong><br />Für den Betrieb der Website erforderlich.</span>" +
-      '<input type="checkbox" checked disabled />' +
-      "</label>" +
-      '<label class="cookie-toggle">' +
-      "<span><strong>Analyse</strong><br />Hilft uns, die Nutzung der Website zu verstehen (z. B. Google Analytics).</span>" +
-      '<input type="checkbox" id="cookieAnalytics" />' +
-      "</label>" +
-      '<label class="cookie-toggle">' +
-      "<span><strong>Marketing</strong><br />Für Anzeigen und Reichweitenmessung (z. B. Google Ads).</span>" +
-      '<input type="checkbox" id="cookieMarketing" />' +
-      "</label>" +
+      '<div class="cookie-settings" id="cookieSettings">' +
+      '<div class="cookie-settings-inner">' +
+      toggleRow(null, "Notwendig", "Für den Betrieb der Website erforderlich.", { locked: true, icon: ICON_LOCK }) +
+      toggleRow("cookieAnalytics", "Analyse", "Hilft uns, die Nutzung der Website zu verstehen (z. B. Google Analytics).", { icon: ICON_CHART }) +
+      toggleRow("cookieMarketing", "Marketing", "Für Anzeigen und Reichweitenmessung (z. B. Google Ads).", { icon: ICON_MEGAPHONE }) +
       '<button type="button" class="btn btn-primary btn-block" id="cookieSaveSettings">Auswahl speichern</button>' +
+      "</div>" +
       "</div>" +
       "</div>";
     document.body.appendChild(wrap);
@@ -91,8 +113,7 @@
     });
 
     document.getElementById("cookieOpenSettings").addEventListener("click", function () {
-      var panel = document.getElementById("cookieSettings");
-      panel.hidden = !panel.hidden;
+      toggleSettingsPanel();
     });
 
     document.getElementById("cookieSaveSettings").addEventListener("click", function () {
@@ -104,6 +125,15 @@
       applyConsent(categories);
       hideBanner();
     });
+  }
+
+  function toggleSettingsPanel(forceOpen) {
+    var panel = document.getElementById("cookieSettings");
+    var trigger = document.getElementById("cookieOpenSettings");
+    if (!panel) return;
+    var willOpen = typeof forceOpen === "boolean" ? forceOpen : !panel.classList.contains("is-open");
+    panel.classList.toggle("is-open", willOpen);
+    if (trigger) trigger.setAttribute("aria-expanded", String(willOpen));
   }
 
   function showBanner() {
@@ -125,8 +155,7 @@
 
   window.openCookieSettings = function () {
     showBanner();
-    var panel = document.getElementById("cookieSettings");
-    if (panel) panel.hidden = false;
+    toggleSettingsPanel(true);
     var stored = readConsent();
     if (stored) {
       document.getElementById("cookieAnalytics").checked = !!stored.categories.analytics;
