@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 const { buildLeadMailHtml, buildLeadMailText } = require("./_leadMailTemplate");
 
 const PHONE_PATTERN = /^[+0-9 ()/-]{6,20}$/;
@@ -58,36 +58,29 @@ module.exports = async function handler(req, res) {
     email: String(body.email).trim(),
   };
 
-  const {
-    SMTP_HOST,
-    SMTP_PORT,
-    SMTP_USER,
-    SMTP_PASS,
-    LEAD_TO_EMAIL,
-    LEAD_FROM_EMAIL,
-  } = process.env;
+  const { RESEND_API_KEY, LEAD_TO_EMAIL, LEAD_FROM_EMAIL } = process.env;
 
-  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS || !LEAD_TO_EMAIL) {
-    console.error("Lead-Mailversand nicht konfiguriert: SMTP_HOST/SMTP_USER/SMTP_PASS/LEAD_TO_EMAIL fehlen.");
+  if (!RESEND_API_KEY || !LEAD_TO_EMAIL || !LEAD_FROM_EMAIL) {
+    console.error("Lead-Mailversand nicht konfiguriert: RESEND_API_KEY/LEAD_TO_EMAIL/LEAD_FROM_EMAIL fehlen.");
     return res.status(500).json({ error: "mail_not_configured" });
   }
 
   try {
-    const transporter = nodemailer.createTransport({
-      host: SMTP_HOST,
-      port: Number(SMTP_PORT) || 587,
-      secure: Number(SMTP_PORT) === 465,
-      auth: { user: SMTP_USER, pass: SMTP_PASS },
-    });
+    const resend = new Resend(RESEND_API_KEY);
 
-    await transporter.sendMail({
-      from: LEAD_FROM_EMAIL || SMTP_USER,
+    const { error } = await resend.emails.send({
+      from: LEAD_FROM_EMAIL,
       to: LEAD_TO_EMAIL,
       replyTo: lead.email,
       subject: "Neue Anfrage: " + lead.name + " (" + lead.location + ")",
       text: buildLeadMailText(lead),
       html: buildLeadMailHtml(lead),
     });
+
+    if (error) {
+      console.error("Fehler beim Versand der Lead-E-Mail (Resend):", error);
+      return res.status(500).json({ error: "send_failed" });
+    }
 
     return res.status(200).json({ ok: true });
   } catch (err) {
