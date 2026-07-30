@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.example.de/</loc>
+    <loc>https://www.vergleiche-jetzt-dein-angebot.de/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.example.de/impressum.html</loc>
+    <loc>https://www.vergleiche-jetzt-dein-angebot.de/impressum.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://www.example.de/datenschutz.html</loc>
+    <loc>https://www.vergleiche-jetzt-dein-angebot.de/datenschutz.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://www.example.de/agb.html</loc>
+    <loc>https://www.vergleiche-jetzt-dein-angebot.de/agb.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
