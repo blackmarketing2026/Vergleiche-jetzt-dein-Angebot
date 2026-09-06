@@ -29,6 +29,27 @@ async function sendLead(data) {
   let submitting = false;
   let leadData = {};
 
+  function wantsToSpecifyAmount() {
+    return form.elements.currentCost.value === 'Ja, ich möchte meinen monatlichen Betrag angeben';
+  }
+
+  function syncAmountField() {
+    const visible = wantsToSpecifyAmount();
+    document.querySelector('#current-amount-field').hidden = !visible;
+    form.elements.currentAmount.disabled = !visible;
+    form.elements.currentAmount.required = visible;
+    if (!visible) {
+      form.elements.currentAmount.value = '';
+      setError('currentAmount', '');
+    }
+  }
+
+  function parseAmount(value) {
+    const normalized = String(value || '').trim().replace(',', '.');
+    return /^\d+(?:\.\d{1,2})?$/.test(normalized) && Number(normalized) > 0
+      ? Number(normalized) : null;
+  }
+
   function collectData() {
     const fields = new FormData(form);
     leadData = {
@@ -37,6 +58,7 @@ async function sendLead(data) {
       size: fields.get('size'),
       frequency: fields.get('frequency'),
       currentCost: fields.get('currentCost') || 'Möchte ich nicht angeben',
+      currentAmount: wantsToSpecifyAmount() ? parseAmount(fields.get('currentAmount')) : null,
       fullName: String(fields.get('fullName') || '').trim(),
       phone: String(fields.get('phone') || '').trim(),
       email: String(fields.get('email') || '').trim(),
@@ -65,6 +87,8 @@ async function sendLead(data) {
       errors.postalCode = /^\d{5}$/.test(data.postalCode) ? '' : 'Bitte geben Sie eine fünfstellige deutsche PLZ ein.';
       errors.size = data.size ? '' : 'Bitte wählen Sie die Objektgröße aus.';
       errors.frequency = data.frequency ? '' : 'Bitte wählen Sie die gewünschte Häufigkeit aus.';
+      errors.currentAmount = wantsToSpecifyAmount() && data.currentAmount === null
+        ? 'Bitte geben Sie einen Betrag größer als 0 mit höchstens zwei Nachkommastellen ein, z. B. 450,00.' : '';
     }
     if (step === 3) {
       errors.fullName = data.fullName.length >= 2 && /\p{L}/u.test(data.fullName) ? '' : 'Bitte geben Sie Ihren Vor- und Nachnamen ein.';
@@ -132,7 +156,10 @@ async function sendLead(data) {
     collectData();
     if (event.target.hasAttribute('aria-invalid')) validate(currentStep, false);
   });
-  form.addEventListener('change', collectData);
+  form.addEventListener('change', event => {
+    if (event.target.name === 'currentCost') syncAmountField();
+    collectData();
+  });
   backButton.addEventListener('click', () => {
     if (!submitting && currentStep > 1) showStep(currentStep - 1);
   });
@@ -170,6 +197,7 @@ async function sendLead(data) {
   });
   document.querySelector('#restart-button').addEventListener('click', () => {
     form.reset();
+    syncAmountField();
     leadData = {};
     form.querySelectorAll('[aria-invalid]').forEach(input => input.removeAttribute('aria-invalid'));
     form.querySelectorAll('.lf-error').forEach(error => { error.hidden = true; error.textContent = ''; });
@@ -181,5 +209,6 @@ async function sendLead(data) {
     formView.hidden = false;
     showStep(1);
   });
+  syncAmountField();
   showStep(1, false);
 })();
