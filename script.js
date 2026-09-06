@@ -44,7 +44,7 @@ async function sendLead(data) {
     }
   }
 
-  function parseAmount(value) {
+  function parsePositiveDecimal(value) {
     const normalized = String(value || '').trim().replace(',', '.');
     return /^\d+(?:\.\d{1,2})?$/.test(normalized) && Number(normalized) > 0
       ? Number(normalized) : null;
@@ -55,10 +55,10 @@ async function sendLead(data) {
     leadData = {
       services: fields.getAll('services'),
       postalCode: String(fields.get('postalCode') || '').trim(),
-      size: fields.get('size'),
+      size: parsePositiveDecimal(fields.get('size')), // Objektgröße in Quadratmetern
       frequency: fields.get('frequency'),
       currentCost: fields.get('currentCost') || 'Möchte ich nicht angeben',
-      currentAmount: wantsToSpecifyAmount() ? parseAmount(fields.get('currentAmount')) : null,
+      currentAmount: wantsToSpecifyAmount() ? parsePositiveDecimal(fields.get('currentAmount')) : null,
       fullName: String(fields.get('fullName') || '').trim(),
       phone: String(fields.get('phone') || '').trim(),
       email: String(fields.get('email') || '').trim(),
@@ -85,7 +85,7 @@ async function sendLead(data) {
     if (step === 1) errors.services = data.services.length ? '' : 'Bitte wählen Sie mindestens eine Reinigungsleistung aus.';
     if (step === 2) {
       errors.postalCode = /^\d{5}$/.test(data.postalCode) ? '' : 'Bitte geben Sie eine fünfstellige deutsche PLZ ein.';
-      errors.size = data.size ? '' : 'Bitte wählen Sie die Objektgröße aus.';
+      errors.size = data.size !== null ? '' : 'Bitte geben Sie die Objektgröße in m² als Zahl größer als 0 mit höchstens zwei Nachkommastellen ein, z. B. 250 oder 250,50.';
       errors.frequency = data.frequency ? '' : 'Bitte wählen Sie die gewünschte Häufigkeit aus.';
       errors.currentAmount = wantsToSpecifyAmount() && data.currentAmount === null
         ? 'Bitte geben Sie einen Betrag größer als 0 mit höchstens zwei Nachkommastellen ein, z. B. 450,00.' : '';
@@ -123,7 +123,7 @@ async function sendLead(data) {
   function renderSummary(data) {
     const summary = document.querySelector('#lead-summary');
     summary.replaceChildren();
-    for (const [label, value] of [['Leistungsart', data.services.join(', ')], ['PLZ', data.postalCode], ['Objektgröße', data.size], ['Häufigkeit', data.frequency]]) {
+    for (const [label, value] of [['Leistungsart', data.services.join(', ')], ['PLZ', data.postalCode], ['Objektgröße', `${data.size.toLocaleString('de-DE', { maximumFractionDigits: 2 })} m²`], ['Häufigkeit', data.frequency]]) {
       const row = document.createElement('div');
       const term = document.createElement('dt');
       const description = document.createElement('dd');
