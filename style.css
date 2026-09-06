@@ -1291,6 +1291,7 @@ summary:focus-visible {
 .lead-page h1 { font-size:clamp(28px,4.2vw,43px); line-height:1.2; font-weight:720; letter-spacing:-1.3px; }
 .lead-page h1 span { color:#1d65aa; }
 .lead-page .lf-subtitle { color:var(--lf-muted); font-size:15px; line-height:1.7; margin:17px auto 0; max-width:530px; }
+.lead-page .lf-intro-note { color:var(--lf-muted); font-size:13px; line-height:1.7; margin:13px auto 0; max-width:520px; }
 .lead-page .lf-card { max-width:740px; margin:auto; padding:25px 20px 20px; background:white; border:1px solid #dfe7f0; border-radius:20px; box-shadow:0 16px 50px -26px #12335630,0 2px 5px #12335608; }
 .lead-page .lf-progress-head { display:flex; align-items:center; justify-content:space-between; font-size:11px; color:var(--lf-muted); }
 .lead-page #step-label { color:var(--lf-accent); font-weight:700; }
