@@ -1,19 +1,47 @@
-const { Resend } = require("resend");
+const nodemailer = require("nodemailer");
 const { buildLeadMailHtml, buildLeadMailText } = require("./_leadMailTemplate");
 
-const PHONE_PATTERN = /^[+0-9 ()/-]{6,20}$/;
+const POSTAL_CODE_PATTERN = /^\d{5}$/;
+const PHONE_PATTERN = /^[+\d\s()/.-]+$/;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const ALLOWED_SERVICES = [
+  "Büro- und Gewerbereinigung",
+  "Treppenhausreinigung",
+  "Fensterreinigung",
+  "Praxisreinigung",
+  "Bauendreinigung",
+  "Sonstige Reinigung",
+];
+
+function parsePositiveDecimal(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const num = Number(value);
+  return Number.isFinite(num) && num > 0 ? num : null;
+}
 
 function validateLead(body) {
   const errors = {};
 
-  if (!body.name || String(body.name).trim().length < 2) {
-    errors.name = "Name ist ungültig.";
+  const services = Array.isArray(body.services)
+    ? body.services.map((v) => String(v)).filter((v) => ALLOWED_SERVICES.includes(v))
+    : [];
+  if (!services.length) {
+    errors.services = "Bitte wählen Sie mindestens eine Reinigungsleistung aus.";
   }
-  if (!body.location || String(body.location).trim().length < 2) {
-    errors.location = "Ort ist ungültig.";
+  if (!body.postalCode || !POSTAL_CODE_PATTERN.test(String(body.postalCode).trim())) {
+    errors.postalCode = "PLZ ist ungültig.";
   }
-  if (!body.phone || !PHONE_PATTERN.test(String(body.phone).trim())) {
+  if (parsePositiveDecimal(body.size) === null) {
+    errors.size = "Objektgröße ist ungültig.";
+  }
+  if (!body.frequency || !String(body.frequency).trim()) {
+    errors.frequency = "Häufigkeit fehlt.";
+  }
+  if (!body.fullName || String(body.fullName).trim().length < 2) {
+    errors.fullName = "Name ist ungültig.";
+  }
+  const digits = String(body.phone || "").replace(/\D/g, "");
+  if (!body.phone || !PHONE_PATTERN.test(String(body.phone).trim()) || digits.length < 6 || digits.length > 15) {
     errors.phone = "Telefonnummer ist ungültig.";
   }
   if (!body.email || !EMAIL_PATTERN.test(String(body.email).trim())) {
@@ -24,6 +52,19 @@ function validateLead(body) {
   }
 
   return errors;
+}
+
+function createTransporter() {
+  const { stmp_server, stmp_user, smtp_passwort, smtp_port, smtp_secure } = process.env;
+  const port = smtp_port ? Number(smtp_port) : 587;
+  const secure = smtp_secure ? smtp_secure === "true" : port === 465;
+
+  return nodemailer.createTransport({
+    host: stmp_server,
+    port,
+    secure,
+    auth: { user: stmp_user, pass: smtp_passwort },
+  });
 }
 
 module.exports = async function handler(req, res) {
@@ -50,58 +91,47 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: "validation_failed", fields: errors });
   }
 
-  const ALLOWED_CLEANING_TYPES = [
-    "Büroreinigung",
-    "Treppenhausreinigung",
-    "Praxisreinigung",
-    "Sonderreinigung",
-  ];
-
-  const cleaningType = Array.isArray(body.cleaningType)
-    ? body.cleaningType
-        .map((v) => String(v).trim())
-        .filter((v) => ALLOWED_CLEANING_TYPES.includes(v))
-    : [];
+  const services = body.services
+    .map((v) => String(v).trim())
+    .filter((v) => ALLOWED_SERVICES.includes(v));
 
   const lead = {
-    name: String(body.name).trim(),
-    company: body.company ? String(body.company).trim() : "",
-    location: String(body.location).trim(),
+    services: services,
+    postalCode: String(body.postalCode).trim(),
+    size: parsePositiveDecimal(body.size),
+    frequency: String(body.frequency).trim(),
+    currentCost: body.currentCost ? String(body.currentCost).trim() : "",
+    currentAmount: parsePositiveDecimal(body.currentAmount),
+    fullName: String(body.fullName).trim(),
     phone: String(body.phone).trim(),
     email: String(body.email).trim(),
-    cleaningType: cleaningType,
-    rooms: body.rooms ? String(body.rooms).trim() : "",
-    squareMeters: body.squareMeters ? String(body.squareMeters).trim() : "",
-    offerPrice: body.offerPrice ? String(body.offerPrice).trim() : "",
+    company: body.company ? String(body.company).trim() : "",
   };
 
-  const { RESEND_API_KEY, LEAD_TO_EMAIL, LEAD_FROM_EMAIL } = process.env;
+  const { smtp_empfaenger, stmp_server, stmp_user, smtp_passwort } = process.env;
 
-  if (!RESEND_API_KEY || !LEAD_TO_EMAIL || !LEAD_FROM_EMAIL) {
-    console.error("Lead-Mailversand nicht konfiguriert: RESEND_API_KEY/LEAD_TO_EMAIL/LEAD_FROM_EMAIL fehlen.");
+  if (!smtp_empfaenger || !stmp_server || !stmp_user || !smtp_passwort) {
+    console.error(
+      "Lead-Mailversand nicht konfiguriert: smtp_empfaenger/stmp_server/stmp_user/smtp_passwort fehlen."
+    );
     return res.status(500).json({ error: "mail_not_configured" });
   }
 
   try {
-    const resend = new Resend(RESEND_API_KEY);
+    const transporter = createTransporter();
 
-    const { error } = await resend.emails.send({
-      from: LEAD_FROM_EMAIL,
-      to: LEAD_TO_EMAIL,
+    await transporter.sendMail({
+      from: stmp_user.includes("@") ? `"Vergleiche jetzt dein Angebot" <${stmp_user}>` : stmp_user,
+      to: smtp_empfaenger,
       replyTo: lead.email,
-      subject: "Neue Anfrage: " + lead.name + " (" + lead.location + ")",
+      subject: "Neue Angebotsanfrage: " + lead.fullName + " (" + lead.postalCode + ")",
       text: buildLeadMailText(lead),
       html: buildLeadMailHtml(lead),
     });
 
-    if (error) {
-      console.error("Fehler beim Versand der Lead-E-Mail (Resend):", error);
-      return res.status(500).json({ error: "send_failed" });
-    }
-
     return res.status(200).json({ ok: true });
   } catch (err) {
-    console.error("Fehler beim Versand der Lead-E-Mail:", err);
+    console.error("Fehler beim SMTP-Versand der Lead-E-Mail:", err);
     return res.status(500).json({ error: "send_failed" });
   }
 };

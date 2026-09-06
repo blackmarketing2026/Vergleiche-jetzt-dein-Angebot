@@ -1,17 +1,22 @@
 ﻿'use strict';
 
 /**
- * VERSAND-SCHNITTSTELLE / PLATZHALTER
- * Hier später PHP, Make, Zapier oder eine eigene API anbinden.
- * Aktuell: ausschließlich Arbeitsspeicher + Browser-Konsole, kein Netzwerk,
- * keine Cookies, kein localStorage. Keine API-Schlüssel im Browser hinterlegen.
- * Bei echter Integration: auf bestätigten Server-Erfolg warten, bei Fehler werfen
- * und { demo: false } zurückgeben. Den Prüfschritt zum Einsatzgebiet dann nur
- * nach tatsächlicher Prüfung anzeigen oder entsprechend umbenennen.
+ * VERSAND-SCHNITTSTELLE
+ * Sendet die Anfrage an die serverlose Funktion /api/lead, die den Lead
+ * per SMTP an die konfigurierte Empfänger-Adresse weiterleitet. Wartet auf
+ * bestätigten Server-Erfolg und wirft bei einem Fehler, damit der Aufrufer
+ * die Fehlermeldung im Formular anzeigen kann.
  */
 async function sendLead(data) {
-  console.info('Angebotsanfrage (lokale Demo, nicht versendet):', data);
-  return { demo: true };
+  const response = await fetch('/api/lead', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  if (!response.ok) {
+    throw new Error(`Lead-Versand fehlgeschlagen (Status ${response.status})`);
+  }
+  return response.json();
 }
 
 (() => {
@@ -135,7 +140,6 @@ async function sendLead(data) {
   }
 
   async function showProcessing(data, result) {
-    document.querySelectorAll('.lf-demo').forEach(note => { note.hidden = !result.demo; });
     formView.hidden = true;
     processingView.hidden = false;
     document.querySelector('#processing-heading').focus();
@@ -143,7 +147,7 @@ async function sendLead(data) {
       item.classList.add('is-active');
       await delay(900);
       item.classList.replace('is-active', 'is-done');
-      document.querySelector('#process-status').textContent = `${result.demo ? 'Demo: ' : ''}${item.textContent}`;
+      document.querySelector('#process-status').textContent = item.textContent;
     }
     await delay(500);
     renderSummary(data);
