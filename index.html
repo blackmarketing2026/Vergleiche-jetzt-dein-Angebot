@@ -1,427 +1,98 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-
-  <!-- Consent Mode v2: Standardmäßig alle optionalen Cookies ablehnen -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('consent', 'default', {
-      'analytics_storage': 'denied',
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied',
-      'wait_for_update': 500
-    });
-  </script>
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-MCZWBBZ7');</script>
-  <!-- End Google Tag Manager -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-site-verification" content="tqYNbbVxKsISolY4JpDQ7Z16K_SXEEEKziOsKmOaSmQ" />
-  <title>Vergleiche jetzt dein Angebot – Kostenlose Vergleichsangebote für Gebäudereinigung</title>
-  <meta name="description" content="Fordern Sie kostenlos und unverbindlich bis zu 3 Vergleichsangebote für Büroreinigung, Fensterreinigung, Treppenhausreinigung und weitere Reinigungsdienstleistungen an." />
-  <link rel="icon" type="image/png" href="assets/logo.png" />
-  <link rel="canonical" href="https://www.vergleiche-jetzt-dein-angebot.de/" />
-  <meta name="robots" content="index, follow" />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.vergleiche-jetzt-dein-angebot.de/" />
-  <meta property="og:title" content="Vergleiche jetzt dein Angebot – Kostenlose Vergleichsangebote für Gebäudereinigung" />
-  <meta property="og:description" content="Kostenlos und unverbindlich Reinigungsangebote vergleichen – in wenigen Minuten." />
-  <meta property="og:image" content="https://www.vergleiche-jetzt-dein-angebot.de/assets/logo.png" />
-  <meta property="og:locale" content="de_DE" />
-
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fragen Sie Ihr individuelles Angebot für Gebäudereinigung an. Reinigungsbedarf angeben, Eckdaten ergänzen und kostenlos anfragen.">
+  <meta name="theme-color" content="#142b35">
+  <title>Gebäudereinigung anfragen | Reinigungsangebot</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCZWBBZ7"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <header class="site-header">
-    <div class="container">
-      <a href="#top" class="brand" id="top">
-        <img src="assets/logo.png" alt="Vergleiche jetzt dein Angebot Logo" />
-        <span>Vergleiche jetzt <br />dein Angebot</span>
-      </a>
-
-      <nav class="main-nav" aria-label="Hauptnavigation">
-        <ul>
-          <li><a href="#leistungen">Leistungen</a></li>
-          <li><a href="#ablauf">Ablauf</a></li>
-          <li><a href="#vorteile">Vorteile</a></li>
-          <li><a href="#faq">FAQ</a></li>
-        </ul>
-      </nav>
-
-      <div class="header-actions">
-        <a href="#formular" class="btn btn-primary">Kostenlos anfragen</a>
-        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Menü öffnen">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile Navigation">
-      <a href="#leistungen">Leistungen</a>
-      <a href="#ablauf">Ablauf</a>
-      <a href="#vorteile">Vorteile</a>
-      <a href="#faq">FAQ</a>
-      <a href="#formular">Kostenlos anfragen</a>
-    </nav>
+<body class="lead-page">
+  <svg class="lf-symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4L12 3ZM20 2v4m-2-2h4"/></symbol>
+    <symbol id="i-office" viewBox="0 0 24 24"><path d="M4 21V5l10-2v18M14 9h6v12M2 21h20M8 7v2m0 3v2m0 3v4m9-8h1m-1 4h1"/></symbol>
+    <symbol id="i-stairs" viewBox="0 0 24 24"><path d="M3 21v-5h6v-5h6V6h6M3 9l16-7M6 8v4m6-7v3m6-6v2"/></symbol>
+    <symbol id="i-window" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M12 3v18M4 12h16m-12-5 1-1m6 12 2-2"/></symbol>
+    <symbol id="i-medical" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 5V3h8v2m-4 5v6m-3-3h6"/></symbol>
+    <symbol id="i-build" viewBox="0 0 24 24"><path d="M3 15a9 9 0 0 1 6-8m6 0a9 9 0 0 1 6 8M9 12V4h6v8M2 15h20v4H2z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/></symbol>
+  </defs></svg>
+  <a class="lf-skip" href="#funnel">Zum Anfrageformular</a>
+  <header class="lf-header">
+    <a class="lf-brand" href="index.html" aria-label="Reinigungsangebot – Startseite"><span class="lf-brand-icon"><svg><use href="#i-spark"/></svg></span>Reinigungsangebot<span class="lf-brand-dot">.</span></a>
+    <span class="lf-header-note"><span></span>Kostenlose Anfrage</span>
   </header>
-
-  <main>
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container">
-        <div class="hero-copy">
-          <span class="hero-eyebrow">Kostenloser Vergleichsservice · Gebäudereinigung</span>
-          <h1>Gebäudereinigung gesucht? Vergleichen Sie jetzt kostenlos Angebote.</h1>
-          <p class="hero-sub">Ein Formular, wenige Minuten – und Sie erhalten unverbindliche Angebote von passenden Reinigungsdienstleistern für Büro, Treppenhaus, Fenster oder Gewerbeflächen.</p>
-
-          <div class="hero-cta-row">
-            <a href="#formular" class="btn btn-primary">Jetzt Angebot anfordern</a>
-            <a href="#ablauf" class="btn btn-outline">So funktioniert's</a>
-          </div>
-
-          <ul class="hero-trust">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>100 % kostenlos</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Unverbindlich</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>DSGVO-konform</li>
-          </ul>
-        </div>
-
-        <div class="hero-visual">
-          <div class="hero-visual-card">
-            <img src="assets/logo.png" alt="" aria-hidden="true" />
-            <ul class="hero-visual-list">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Formular in 2 Minuten ausfüllen</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Passende Anbieter erhalten Ihre Anfrage</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Angebote vergleichen &amp; frei entscheiden</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROBLEM -->
-    <section>
-      <div class="container">
-        <div class="section-header center">
-          <span class="eyebrow">Die Ausgangslage</span>
-          <h2>Die Suche nach der passenden Reinigungsfirma kostet Zeit</h2>
-          <p>Mehrere Anbieter einzeln anschreiben, Preise vergleichen, auf Rückmeldungen warten: Wer selbst sucht, investiert schnell mehrere Stunden – ohne zu wissen, ob das Ergebnis am Ende wirklich das beste Angebot ist.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- LEISTUNGEN -->
-    <section id="leistungen" class="section-muted">
-      <div class="container">
-        <div class="section-header center">
-          <span class="eyebrow">Leistungen</span>
-          <h2>Für diese Reinigungsbereiche vermitteln wir Angebote</h2>
-          <p>Ganz gleich, ob Büro, Treppenhaus oder Gewerbefläche – tragen Sie Ihren Bedarf einmal ein, wir kümmern uns um den Rest.</p>
-        </div>
-
-        <div class="grid grid-3">
-          <div class="card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M9 7V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v3"/></svg>
-            </div>
-            <h3>Büroreinigung</h3>
-            <p>Regelmäßige Unterhaltsreinigung für Büros und Verwaltungsflächen.</p>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18M12 3v18"/></svg>
-            </div>
-            <h3>Fensterreinigung</h3>
-            <p>Streifenfreie Reinigung von Fenstern und Glasflächen, innen und außen.</p>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg>
-            </div>
-            <h3>Treppenhausreinigung</h3>
-            <p>Saubere Treppenhäuser und Eingangsbereiche für Wohn- und Gewerbeobjekte.</p>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg>
-            </div>
-            <h3>Unterhaltsreinigung</h3>
-            <p>Wiederkehrende Reinigung nach individuellem Rhythmus und Umfang.</p>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M21 3L3 21"/></svg>
-            </div>
-            <h3>Grundreinigung</h3>
-            <p>Intensive Einmalreinigung, z. B. nach Umzug, Bauarbeiten oder Renovierung.</p>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v8M8 12h8"/><circle cx="12" cy="12" r="9"/></svg>
-            </div>
-            <h3>Sonderreinigung</h3>
-            <p>Individuelle Anfragen wie Baureinigung, Industriereinigung oder Sonderfälle.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABLAUF -->
-    <section id="ablauf">
-      <div class="container">
-        <div class="section-header center">
-          <span class="eyebrow">So funktioniert's</span>
-          <h2>In drei Schritten zu passenden Angeboten</h2>
-        </div>
-
-        <div class="grid grid-3 steps">
-          <div class="step">
-            <h3>Formular ausfüllen</h3>
-            <p>Sie nennen uns Ihre Kontaktdaten und Ihren Ort – in etwa zwei Minuten.</p>
-          </div>
-          <div class="step">
-            <h3>Anfrage wird weitergeleitet</h3>
-            <p>Wir leiten Ihre Anfrage an passende Reinigungsdienstleister in Ihrer Region weiter.</p>
-          </div>
-          <div class="step">
-            <h3>Angebote vergleichen</h3>
-            <p>Sie erhalten Rückmeldungen, vergleichen in Ruhe und entscheiden völlig frei.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- VORTEILE -->
-    <section id="vorteile" class="section-muted">
-      <div class="container">
-        <div class="section-header center">
-          <span class="eyebrow">Ihre Vorteile</span>
-          <h2>Warum sich der Vergleich lohnt</h2>
-        </div>
-
-        <div class="grid grid-2">
-          <div class="benefit">
-            <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
-            <div>
-              <h3>Zeit sparen</h3>
-              <p>Ein Formular statt einzelner Anfragen bei mehreren Anbietern.</p>
-            </div>
-          </div>
-
-          <div class="benefit">
-            <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-            <div>
-              <h3>Angebote vergleichen</h3>
-              <p>Mehrere Rückmeldungen gegenüberstellen, statt sich auf ein einzelnes Angebot zu verlassen.</p>
-            </div>
-          </div>
-
-          <div class="benefit">
-            <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
-            <div>
-              <h3>Kostenlos &amp; unverbindlich</h3>
-              <p>Die Anfrage ist für Sie kostenfrei. Kein Angebot ist ein Kaufzwang.</p>
-            </div>
-          </div>
-
-          <div class="benefit">
-            <div class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-            <div>
-              <h3>Datenschutz ernst genommen</h3>
-              <p>Ihre Angaben werden ausschließlich zur Vermittlung passender Angebote verwendet.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq">
-      <div class="container">
-        <div class="section-header center">
-          <span class="eyebrow">Häufige Fragen</span>
-          <h2>Fragen, die uns oft gestellt werden</h2>
-        </div>
-
-        <div style="max-width: 760px; margin-inline: auto;">
-          <details class="faq-item" open>
-            <summary>Ist die Anfrage wirklich kostenlos?<span class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-            <div class="faq-answer">Ja. Die Nutzung des Vergleichsformulars und die Vermittlung an Reinigungsdienstleister sind für Sie zu keinem Zeitpunkt mit Kosten verbunden.</div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Bin ich verpflichtet, ein Angebot anzunehmen?<span class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-            <div class="faq-answer">Nein. Sie entscheiden nach dem Vergleich frei, ob und mit welchem Anbieter Sie zusammenarbeiten möchten.</div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Wie schnell erhalte ich Rückmeldungen?<span class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-            <div class="faq-answer">Das hängt von Region und Verfügbarkeit der Anbieter ab. In der Regel meldet sich der erste passende Dienstleister zeitnah nach Ihrer Anfrage.</div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Für welche Objekte funktioniert der Vergleich?<span class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-            <div class="faq-answer">Sowohl für gewerbliche Objekte wie Büros, Praxen und Treppenhäuser als auch für private Anfragen wie Grundreinigungen.</div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Was passiert mit meinen Daten?<span class="faq-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></summary>
-            <div class="faq-answer">Ihre Angaben werden ausschließlich zur Bearbeitung und Weiterleitung Ihrer Anfrage an passende Reinigungsdienstleister genutzt. Details finden Sie in unserer <a href="https://cleanteam-solingen.de/datenschutz/" target="_blank" rel="noopener">Datenschutzerklärung</a>.</div>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- FORMULAR -->
-    <section id="formular" class="form-section">
-      <div class="container">
-        <div class="form-wrap">
-          <div class="form-intro">
-            <span class="eyebrow" style="background: rgba(255,255,255,0.14); color:#fff;">Kostenlos &amp; unverbindlich</span>
-            <h2>Jetzt Vergleichsangebot anfordern</h2>
-            <p>Füllen Sie das Formular aus – wir leiten Ihre Anfrage an passende Reinigungsdienstleister in Ihrer Region weiter.</p>
-            <ul>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Keine versteckten Kosten</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Keine Verpflichtung zur Auftragsvergabe</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Dauert nur rund 2 Minuten</li>
-            </ul>
-          </div>
-
-          <div class="form-card">
-            <form id="leadForm" novalidate>
-              <div class="form-grid">
-                <div class="form-field">
-                  <label for="name">Name*</label>
-                  <input type="text" id="name" name="name" autocomplete="name" required />
-                  <span class="field-error" data-error-for="name"></span>
-                </div>
-
-                <div class="form-field">
-                  <label for="company">Firmenname <span class="optional">(falls Gewerbe)</span></label>
-                  <input type="text" id="company" name="company" autocomplete="organization" />
-                  <span class="field-error" data-error-for="company"></span>
-                </div>
-
-                <div class="form-field">
-                  <label for="location">Ort*</label>
-                  <input type="text" id="location" name="location" autocomplete="address-level2" required />
-                  <span class="field-error" data-error-for="location"></span>
-                </div>
-
-                <div class="form-field">
-                  <label for="phone">Telefonnummer*</label>
-                  <input type="tel" id="phone" name="phone" autocomplete="tel" required />
-                  <span class="field-error" data-error-for="phone"></span>
-                </div>
-
-                <div class="form-field full">
-                  <label>Reinigungsart <span class="optional">(Mehrfachauswahl möglich, optional)</span></label>
-                  <div class="checkbox-group">
-                    <label class="checkbox-option">
-                      <input type="checkbox" name="cleaningType" value="Büroreinigung" />
-                      Büroreinigung
-                    </label>
-                    <label class="checkbox-option">
-                      <input type="checkbox" name="cleaningType" value="Treppenhausreinigung" />
-                      Treppenhausreinigung
-                    </label>
-                    <label class="checkbox-option">
-                      <input type="checkbox" name="cleaningType" value="Praxisreinigung" />
-                      Praxisreinigung
-                    </label>
-                    <label class="checkbox-option">
-                      <input type="checkbox" name="cleaningType" value="Sonderreinigung" />
-                      Sonderreinigung
-                    </label>
-                  </div>
-                </div>
-
-                <div class="form-field">
-                  <label for="rooms">Anzahl Räume <span class="optional">(optional)</span></label>
-                  <input type="number" id="rooms" name="rooms" min="0" inputmode="numeric" />
-                </div>
-
-                <div class="form-field">
-                  <label for="squareMeters">Fläche in m² <span class="optional">(optional)</span></label>
-                  <input type="number" id="squareMeters" name="squareMeters" min="0" inputmode="numeric" />
-                </div>
-
-                <div class="form-field full">
-                  <label for="offerPrice">Liegt Ihnen bereits ein Angebot vor? Preis in € <span class="optional">(optional)</span></label>
-                  <input type="number" id="offerPrice" name="offerPrice" min="0" step="0.01" inputmode="decimal" placeholder="z. B. 450" />
-                  <span class="field-hint">Dann vergleichen wir gezielt dagegen.</span>
-                </div>
-
-                <div class="form-field full">
-                  <label for="email">E-Mail-Adresse*</label>
-                  <input type="email" id="email" name="email" autocomplete="email" required />
-                  <span class="field-error" data-error-for="email"></span>
-                </div>
-              </div>
-
-              <div class="consent-field">
-                <input type="checkbox" id="consent" name="consent" required />
-                <label for="consent">Ich bin damit einverstanden, dass meine Angaben zur Bearbeitung meiner Anfrage gespeichert und an passende Reinigungsdienstleister zur Angebotserstellung weitergeleitet werden. Details in der <a href="https://cleanteam-solingen.de/datenschutz/" target="_blank" rel="noopener">Datenschutzerklärung</a>.*</label>
-              </div>
-              <span class="field-error" data-error-for="consent"></span>
-
-              <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Jetzt unverbindlich Angebote anfordern</button>
-
-              <p class="form-status" id="formStatus" role="status"></p>
-
-              <p class="form-note">* Pflichtfeld. Mit dem Absenden werden keine Kosten fällig.</p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-top">
-        <a href="#top" class="footer-brand">
-          <img src="assets/logo.png" alt="Vergleiche jetzt dein Angebot Logo" />
-          <span>Vergleiche jetzt dein Angebot</span>
-        </a>
-
-        <nav class="footer-nav" aria-label="Rechtliches">
-          <a href="https://cleanteam-solingen.de/impressum/" target="_blank" rel="noopener">Impressum</a>
-          <a href="https://cleanteam-solingen.de/datenschutz/" target="_blank" rel="noopener">Datenschutz</a>
-          <a href="agb.html">AGB</a>
-          <a href="#" id="cookieSettingsLink">Cookie-Einstellungen</a>
-        </nav>
-      </div>
-
-      <div class="footer-bottom">
-        <span>&copy; <span id="year"></span> Vergleiche jetzt dein Angebot. Alle Rechte vorbehalten.</span>
-        <span>Ein kostenloser Vermittlungsservice für Reinigungsdienstleistungen.</span>
-      </div>
+  <main class="lf-main">
+    <div class="lf-intro">
+      <p class="lf-eyebrow">SAUBERE RÄUME. KLARE ANFRAGE.</p>
+      <h1>Individuelles Angebot für Ihre <span>Gebäudereinigung</span> anfragen</h1>
+      <p class="lf-subtitle">In wenigen Schritten Bedarf angeben und unverbindlich prüfen lassen.</p>
     </div>
-  </footer>
-
-  <script src="page.js"></script>
-  <script src="cookie-consent.js"></script>
+    <section class="lf-card" id="funnel" aria-label="Angebotsanfrage">
+      <div id="form-view">
+        <div class="lf-progress-head"><span id="step-label" aria-live="polite">Schritt 1 von 3</span><span id="step-name">Reinigungsbedarf</span></div>
+        <ol class="lf-progress" aria-label="Fortschritt"><li aria-current="step"><span>1</span>Bedarf</li><li><span>2</span>Eckdaten</li><li><span>3</span>Kontakt</li></ol>
+        <form id="lead-form" novalidate>
+          <section class="lf-step" data-step="1" aria-labelledby="heading-1">
+            <h2 id="heading-1" tabindex="-1">Welche Reinigung benötigen Sie?</h2>
+            <p class="lf-help" id="service-hint">Wählen Sie die passenden Leistungen. Mehrfachauswahl möglich.</p>
+            <fieldset class="lf-services" aria-describedby="service-hint services-error"><legend class="lf-sr">Reinigungsleistungen (Pflichtfeld)</legend>
+              <label class="lf-option"><input type="checkbox" name="services" value="Büro- und Gewerbereinigung"><svg><use href="#i-office"/></svg><span>Büro- und<br>Gewerbereinigung</span><span class="lf-tick"><svg><use href="#i-check"/></svg></span></label>
+              <label class="lf-option"><input type="checkbox" name="services" value="Treppenhausreinigung"><svg><use href="#i-stairs"/></svg><span>Treppenhausreinigung</span><span class="lf-tick"><svg><use href="#i-check"/></svg></span></label>
+              <label class="lf-option"><input type="checkbox" name="services" value="Fensterreinigung"><svg><use href="#i-window"/></svg><span>Fensterreinigung</span><span class="lf-tick"><svg><use href="#i-check"/></svg></span></label>
+              <label class="lf-option"><input type="checkbox" name="services" value="Praxisreinigung"><svg><use href="#i-medical"/></svg><span>Praxisreinigung</span><span class="lf-tick"><svg><use href="#i-check"/></svg></span></label>
+              <label class="lf-option"><input type="checkbox" name="services" value="Bauendreinigung"><svg><use href="#i-build"/></svg><span>Bauendreinigung</span><span class="lf-tick"><svg><use href="#i-check"/></svg></span></label>
+              <label class="lf-option"><input type="checkbox" name="services" value="Sonstige Reinigung"><svg><use href="#i-spark"/></svg><span>Sonstige Reinigung</span><span class="lf-tick"><svg><use href="#i-check"/></svg></span></label>
+            </fieldset>
+            <p class="lf-error" id="services-error" hidden></p>
+          </section>
+          <section class="lf-step" data-step="2" aria-labelledby="heading-2" hidden>
+            <h2 id="heading-2" tabindex="-1">Wo und in welchem Umfang wird gereinigt?</h2>
+            <p class="lf-help">Mit diesen Eckdaten können wir Ihren Bedarf besser einordnen.</p>
+            <div class="lf-fields">
+              <div class="lf-field"><label for="postalCode">PLZ <span>*</span></label><input id="postalCode" name="postalCode" autocomplete="postal-code" inputmode="numeric" maxlength="5" placeholder="z. B. 10115" required aria-describedby="postalCode-error"><p class="lf-error" id="postalCode-error" hidden></p></div>
+              <div class="lf-field"><label for="size">Objektgröße <span>*</span></label><select id="size" name="size" required aria-describedby="size-error"><option value="">Bitte auswählen</option><option>bis 100 m²</option><option>100–300 m²</option><option>300–1.000 m²</option><option>über 1.000 m²</option></select><p class="lf-error" id="size-error" hidden></p></div>
+              <div class="lf-field lf-wide"><label for="frequency">Häufigkeit <span>*</span></label><select id="frequency" name="frequency" required aria-describedby="frequency-error"><option value="">Bitte auswählen</option><option>einmalig</option><option>wöchentlich</option><option>14-tägig</option><option>monatlich</option></select><p class="lf-error" id="frequency-error" hidden></p></div>
+              <div class="lf-field lf-wide lf-budget"><label for="currentCost">Zahlen Sie aktuell bereits für eine regelmäßige Reinigung?</label><select id="currentCost" name="currentCost"><option value="">Bitte auswählen (optional)</option><option>Nein, erstmals gesucht</option><option>Ja, bis 250 € monatlich</option><option>Ja, 250–500 € monatlich</option><option>Ja, 500–1.000 € monatlich</option><option>Ja, über 1.000 € monatlich</option><option>Möchte ich nicht angeben</option></select></div>
+            </div><p class="lf-required">* Pflichtfelder</p>
+          </section>
+          <section class="lf-step" data-step="3" aria-labelledby="heading-3" hidden>
+            <h2 id="heading-3" tabindex="-1">Wohin dürfen wir Ihr individuelles Angebot senden?</h2>
+            <p class="lf-help">Hinterlassen Sie Ihre Kontaktdaten für die Bearbeitung Ihrer Anfrage.</p>
+            <div class="lf-fields">
+              <div class="lf-field lf-wide"><label for="fullName">Vor- und Nachname <span>*</span></label><input id="fullName" name="fullName" autocomplete="name" maxlength="120" required aria-describedby="fullName-error"><p class="lf-error" id="fullName-error" hidden></p></div>
+              <div class="lf-field"><label for="phone">Telefonnummer <span>*</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40" required aria-describedby="phone-error"><p class="lf-error" id="phone-error" hidden></p></div>
+              <div class="lf-field"><label for="email">E-Mail-Adresse <span>*</span></label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="email-error"><p class="lf-error" id="email-error" hidden></p></div>
+              <div class="lf-field lf-wide"><label for="company">Firmenname <span class="lf-optional">(optional)</span></label><input id="company" name="company" autocomplete="organization" maxlength="160"></div>
+            </div>
+            <label class="lf-consent"><input id="consent" name="consent" type="checkbox" required aria-describedby="consent-error"><span>Ich stimme zu, dass meine Angaben zur Bearbeitung meiner Anfrage verarbeitet und ich telefonisch oder per E-Mail kontaktiert werden darf. <a href="datenschutz.html" target="_blank" rel="noopener">Datenschutzhinweise (neuer Tab)</a></span></label>
+            <p class="lf-error" id="consent-error" hidden></p><p class="lf-required">* Pflichtfelder</p>
+          </section>
+          <p id="send-error" class="lf-error" role="alert" hidden></p>
+          <div class="lf-actions"><button type="button" id="back-button" class="lf-back" hidden><svg><use href="#i-arrow"/></svg>Zurück</button><button type="submit" id="next-button" class="lf-primary"><span>Weiter</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+          <p class="lf-reassurance"><svg aria-hidden="true"><use href="#i-lock"/></svg>Kostenlos &amp; unverbindlich. Sie entscheiden in Ruhe.</p>
+        </form>
+      </div>
+      <section id="processing-view" class="lf-result" aria-labelledby="processing-heading" hidden>
+        <span class="lf-result-icon lf-pulse"><svg aria-hidden="true"><use href="#i-spark"/></svg></span>
+        <p class="lf-eyebrow">IHRE ANFRAGE IM ÜBERBLICK</p><h2 id="processing-heading" tabindex="-1">Wir bereiten Ihre Anfrage vor.</h2><p class="lf-help">Einen kleinen Moment bitte.</p>
+        <p class="lf-demo">Demo-Modus: Der Ablauf wird lokal dargestellt. Es werden keine Daten versendet und kein Einsatzgebiet extern geprüft.</p>
+        <ol class="lf-processing-list"><li>Reinigungsbedarf erfasst</li><li>Objektgröße und Reinigungsintervall ausgewertet</li><li>Einsatzgebiet geprüft</li><li>Angebotsanfrage vorbereitet</li><li>Anfrage erfolgreich übermittelt</li></ol><p id="process-status" class="lf-sr" role="status"></p>
+      </section>
+      <section id="success-view" class="lf-result" aria-labelledby="success-heading" hidden>
+        <span class="lf-result-icon"><svg aria-hidden="true"><use href="#i-check"/></svg></span><p class="lf-eyebrow">VIELEN DANK FÜR IHR VERTRAUEN</p><h2 id="success-heading" tabindex="-1">Ihre Angebotsanfrage ist eingegangen.</h2>
+        <p class="lf-help">Wir prüfen Ihre Angaben und melden uns kurzfristig bei Ihnen, um ein individuelles Angebot für Ihre Reinigung vorzubereiten.</p>
+        <p class="lf-demo">Demo-Modus: Ihre Anfrage wurde nur lokal erfasst und in der Browser-Konsole ausgegeben. Es erfolgt noch keine Übermittlung oder Kontaktaufnahme.</p>
+        <dl id="lead-summary" class="lf-summary"></dl><button type="button" id="restart-button" class="lf-primary">Neue Anfrage starten<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </section>
+      <noscript><p class="lf-demo">Bitte aktivieren Sie JavaScript, um das Anfrageformular zu verwenden.</p></noscript>
+    </section>
+    <aside class="lf-next" aria-label="So geht es weiter"><span class="lf-next-icon"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Ihr Bedarf ist der Ausgangspunkt.</h3><p>Nach Ihrer Anfrage werden die Angaben strukturiert geprüft und für ein individuelles Angebot vorbereitet.</p></div></aside>
+  </main>
+  <footer class="lf-footer"><span>Reinigungsangebot · Sauber geplant.</span><nav aria-label="Rechtliche Informationen"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></nav></footer>
 </body>
 </html>
