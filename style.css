@@ -1397,3 +1397,51 @@ summary:focus-visible {
 @media (prefers-reduced-motion:reduce) { html:has(.lead-page) { scroll-behavior:auto; } }
 /* Auf Touch-Geräten verhindert 16px große Eingabeschrift unerwünschtes Hineinzoomen. */
 .lead-page .lf-field input,.lead-page .lf-field select { font-size:16px; }
+
+/* Erklärende Sektionen unterhalb des Anfrageformulars. */
+.lead-page .lf-partners { max-width:1080px; margin:64px auto 0; padding:28px 22px; display:grid; gap:30px; background:var(--lf-ink); border:1px solid #23466a; border-radius:22px; }
+.lead-page .lf-partners-copy { min-width:0; }
+.lead-page .lf-partners .lf-eyebrow { color:#b5df91; font-size:10px; letter-spacing:1.4px; }
+.lead-page .lf-partners h2 { color:#fff; font-size:clamp(24px,3.2vw,32px); line-height:1.25; letter-spacing:-.8px; }
+.lead-page .lf-partners-copy > p:not(.lf-eyebrow) { color:#cbd8e6; font-size:14px; line-height:1.8; margin-top:18px; }
+.lead-page .lf-benefits { display:grid; gap:19px; list-style:none; padding:0; margin:25px 0; }
+.lead-page .lf-benefits li { display:flex; align-items:flex-start; gap:11px; color:#cbd8e6; font-size:13px; line-height:1.7; }
+.lead-page .lf-benefits svg { width:19px; height:19px; margin-top:3px; color:#b5df91; }
+.lead-page .lf-benefits strong { display:block; color:#fff; font-size:14px; font-weight:650; margin-bottom:3px; }
+.lead-page .lf-section-link { display:inline-flex; align-items:center; gap:10px; min-height:44px; font-size:13px; font-weight:650; color:#c4eba6; text-decoration:underline; text-underline-offset:5px; }
+.lead-page .lf-section-link:hover { color:white; }
+.lead-page .lf-section-link svg { width:18px; }
+.lead-page .lf-status-preview { align-self:center; min-width:0; padding:23px 19px; border:1px solid #dce4ed; border-radius:16px; background:#fff; box-shadow:0 14px 30px #061e3330; }
+.lead-page .lf-preview-top { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:22px; color:#34618c; }
+.lead-page .lf-preview-tag { padding:4px 9px; border-radius:5px; background:#edf2f8; font-size:10px; font-weight:650; letter-spacing:.5px; }
+.lead-page .lf-status-preview h3 { font-size:18px; line-height:1.4; }
+.lead-page .lf-preview-description { margin-top:7px; font-size:12px; line-height:1.7; color:var(--lf-muted); }
+.lead-page .lf-preview-steps { list-style:none; display:grid; gap:0; padding:0; margin:25px 0; }
+.lead-page .lf-preview-steps li { position:relative; display:flex; gap:12px; align-items:flex-start; padding-bottom:23px; }
+.lead-page .lf-preview-steps li:last-child { padding-bottom:0; }
+.lead-page .lf-preview-steps li:not(:last-child)::before { content:""; position:absolute; top:31px; bottom:0; left:14px; width:1px; background:#dce4ed; }
+.lead-page .lf-preview-number { display:grid; place-items:center; width:29px; height:29px; flex-shrink:0; border:1px solid #d7e3f0; border-radius:50%; background:#edf2f8; color:#1d65aa; font-size:12px; font-weight:700; }
+.lead-page .lf-preview-steps strong { display:block; font-size:13px; line-height:1.5; margin-top:3px; }
+.lead-page .lf-preview-steps div > span { display:block; margin-top:4px; font-size:11px; line-height:1.7; color:var(--lf-muted); }
+.lead-page .lf-preview-note { border-top:1px solid var(--lf-line); padding-top:15px; color:var(--lf-muted); font-size:11px; line-height:1.8; }
+.lead-page .lf-testimonials { max-width:1080px; margin:55px auto 0; padding:0; }
+.lead-page .lf-section-heading { text-align:center; max-width:640px; margin:0 auto 25px; }
+.lead-page .lf-section-heading h2 { font-size:clamp(23px,3vw,30px); }
+.lead-page .lf-section-heading > p:last-child { max-width:550px; margin:13px auto 0; color:var(--lf-muted); font-size:12px; line-height:1.8; }
+.lead-page .lf-testimonial-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:16px; }
+.lead-page .lf-quote-card { display:flex; flex-direction:column; margin:0; padding:25px 22px; background:#fff; border:1px solid var(--lf-line); border-radius:16px; box-shadow:0 8px 24px #12335605; }
+.lead-page .lf-quote-top { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; }
+.lead-page .lf-stars { color:var(--lf-accent); font-size:18px; letter-spacing:3px; line-height:1.4; }
+.lead-page .lf-sample-label { color:var(--lf-muted); background:#f1f5fa; padding:3px 7px; font-size:10px; border-radius:4px; }
+.lead-page .lf-quote-card blockquote { margin:20px 0 24px; color:var(--lf-ink); font-size:15px; line-height:1.8; }
+.lead-page .lf-quote-card figcaption { margin-top:auto; border-top:1px solid #edf1f6; padding-top:17px; color:var(--lf-ink); font-size:12px; font-weight:650; }
+.lead-page .lf-quote-card figcaption span { display:block; color:var(--lf-muted); font-size:11px; font-weight:400; margin-top:4px; }
+.lead-page .lf-section-cta { display:grid; justify-items:center; gap:14px; margin-top:30px; text-align:center; }
+.lead-page .lf-section-cta p { font-size:13px; color:var(--lf-muted); }
+.lead-page .lf-section-cta .lf-primary { max-width:380px; color:#fff; }
+@media (min-width:760px) {
+ .lead-page .lf-partners { grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:35px; padding:38px; margin-top:75px; }
+ .lead-page .lf-testimonial-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+ .lead-page .lf-status-preview { padding:27px 23px; }
+ .lead-page .lf-testimonials { margin-top:65px; }
+}
