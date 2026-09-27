@@ -6,6 +6,11 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://www.vergleiche-jetzt-dein-angebot.de/gewerbliche-reinigung.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.vergleiche-jetzt-dein-angebot.de/impressum.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>

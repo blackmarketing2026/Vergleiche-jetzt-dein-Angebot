@@ -100,6 +100,7 @@ async function sendLead(data) {
       const digits = data.phone.replace(/\D/g, '');
       errors.phone = /^[+\d\s()\/.\-]+$/.test(data.phone) && digits.length >= 6 && digits.length <= 15 ? '' : 'Bitte geben Sie eine gültige Telefonnummer mit Vorwahl ein.';
       errors.email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) && !form.elements.email.validity.typeMismatch ? '' : 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+      errors.company = data.company.length >= 2 ? '' : 'Bitte geben Sie Ihren Firmennamen ein.';
       errors.consent = data.consent ? '' : 'Bitte stimmen Sie der Verarbeitung und Kontaktaufnahme zu, um Ihre Anfrage abzusenden.';
     }
     Object.entries(errors).forEach(([name, message]) => setError(name, message));

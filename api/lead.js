@@ -11,6 +11,12 @@ const ALLOWED_SERVICES = [
   "Praxisreinigung",
   "Bauendreinigung",
   "Sonstige Reinigung",
+  "B\u00fcroreinigung",
+  "Reinigung von Arztpraxen",
+  "Immobilienreinigung",
+  "Reinigung f\u00fcr Makler",
+  "Industriereinigung",
+  "Tatortreinigung",
 ];
 
 function parsePositiveDecimal(value) {
@@ -46,6 +52,9 @@ function validateLead(body) {
   }
   if (!body.email || !EMAIL_PATTERN.test(String(body.email).trim())) {
     errors.email = "E-Mail-Adresse ist ungültig.";
+  }
+  if (!body.company || String(body.company).trim().length < 2) {
+    errors.company = "Firmenname fehlt.";
   }
   if (!body.consent) {
     errors.consent = "Einwilligung fehlt.";
