@@ -1326,10 +1326,11 @@ summary:focus-visible {
 .lead-page .lf-reassurance svg { width:13px; height:15px; }
 .lead-page .lf-fields { display:grid; grid-template-columns:minmax(0,1fr); gap:18px; }
 .lead-page .lf-field label { display:block; font-size:13px; font-weight:650; line-height:1.5; margin-bottom:7px; }
-.lead-page .lf-field input,.lead-page .lf-field select { width:100%; min-height:49px; border:1px solid #ccd8e5; border-radius:8px; padding:11px 12px; background:#fff; color:var(--lf-ink); font-size:15px; }
+.lead-page .lf-field input,.lead-page .lf-field select,.lead-page .lf-field textarea { width:100%; min-height:49px; border:1px solid #ccd8e5; border-radius:8px; padding:11px 12px; background:#fff; color:var(--lf-ink); font-size:15px; }
+.lead-page .lf-field textarea { min-height:120px; resize:vertical; }
 .lead-page .lf-field input::placeholder { color:#738296; }
 .lead-page .lf-field select { padding-right:6px; }
-.lead-page .lf-field input:focus,.lead-page .lf-field select:focus { border-color:var(--lf-accent); }
+.lead-page .lf-field input:focus,.lead-page .lf-field select:focus,.lead-page .lf-field textarea:focus { border-color:var(--lf-accent); }
 .lead-page .lf-optional { color:var(--lf-muted); font-weight:400; }
 .lead-page .lf-budget { padding-top:18px; border-top:1px solid var(--lf-line); }
 .lead-page .lf-required { margin-top:14px; color:var(--lf-muted); font-size:11px; }
@@ -1396,7 +1397,7 @@ summary:focus-visible {
 @media (max-width:440px) { .lead-page .lf-header { flex-wrap:wrap; padding:18px 16px; gap:8px; } .lead-page .lf-header-note { margin-left:64px; } }
 @media (prefers-reduced-motion:reduce) { html:has(.lead-page) { scroll-behavior:auto; } }
 /* Auf Touch-Geräten verhindert 16px große Eingabeschrift unerwünschtes Hineinzoomen. */
-.lead-page .lf-field input,.lead-page .lf-field select { font-size:16px; }
+.lead-page .lf-field input,.lead-page .lf-field select,.lead-page .lf-field textarea { font-size:16px; }
 
 /* Erklärende Sektionen unterhalb des Anfrageformulars. */
 .lead-page .lf-partners { max-width:1080px; margin:64px auto 0; padding:28px 22px; display:grid; gap:30px; background:var(--lf-ink); border:1px solid #23466a; border-radius:22px; }

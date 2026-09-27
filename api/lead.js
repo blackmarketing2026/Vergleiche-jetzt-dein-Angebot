@@ -34,10 +34,25 @@ function validateLead(body) {
   if (!services.length) {
     errors.services = "Bitte wählen Sie mindestens eine Reinigungsleistung aus.";
   }
+  const commercialServices = ["B\u00fcroreinigung", "Reinigung von Arztpraxen", "Immobilienreinigung", "Industriereinigung", "Tatortreinigung"];
+  const isCommercialLead = services.some((service) => commercialServices.includes(service));
+  const needsRoomCount = services.some((service) => ["B\u00fcroreinigung", "Reinigung von Arztpraxen", "Immobilienreinigung"].includes(service));
+  if (needsRoomCount && (!Number.isInteger(Number(body.roomCount)) || Number(body.roomCount) < 1)) {
+    errors.roomCount = "Anzahl der Räume ist ungültig.";
+  }
+  if (services.includes("Immobilienreinigung") && (body.toiletCount === null || body.toiletCount === undefined || body.toiletCount === "" || !Number.isInteger(Number(body.toiletCount)) || Number(body.toiletCount) < 0)) {
+    errors.toiletCount = "Anzahl der Toiletten ist ungültig.";
+  }
+  if (services.includes("Industriereinigung") && String(body.industrialDetails || "").trim().length < 5) {
+    errors.industrialDetails = "Beschreibung der Industriereinigung fehlt.";
+  }
+  if (services.includes("Tatortreinigung") && String(body.crimeDetails || "").trim().length < 5) {
+    errors.crimeDetails = "Beschreibung der Tatortreinigung fehlt.";
+  }
   if (!body.postalCode || !POSTAL_CODE_PATTERN.test(String(body.postalCode).trim())) {
     errors.postalCode = "PLZ ist ungültig.";
   }
-  if (parsePositiveDecimal(body.size) === null) {
+  if (!isCommercialLead && parsePositiveDecimal(body.size) === null) {
     errors.size = "Objektgröße ist ungültig.";
   }
   if (!body.frequency || !String(body.frequency).trim()) {
@@ -108,6 +123,10 @@ module.exports = async function handler(req, res) {
     services: services,
     postalCode: String(body.postalCode).trim(),
     size: parsePositiveDecimal(body.size),
+    roomCount: Number.isInteger(Number(body.roomCount)) && Number(body.roomCount) > 0 ? Number(body.roomCount) : null,
+    toiletCount: Number.isInteger(Number(body.toiletCount)) && Number(body.toiletCount) >= 0 ? Number(body.toiletCount) : null,
+    industrialDetails: body.industrialDetails ? String(body.industrialDetails).trim().slice(0, 2000) : "",
+    crimeDetails: body.crimeDetails ? String(body.crimeDetails).trim().slice(0, 2000) : "",
     frequency: String(body.frequency).trim(),
     currentCost: body.currentCost ? String(body.currentCost).trim() : "",
     currentAmount: parsePositiveDecimal(body.currentAmount),

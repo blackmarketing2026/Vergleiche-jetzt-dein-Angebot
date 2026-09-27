@@ -20,6 +20,11 @@ function buildRows(lead) {
     ["Aktuelle Reinigung", lead.currentCost || "-"],
   ];
 
+  if (lead.roomCount !== null) rows.push(["Anzahl Räume", String(lead.roomCount)]);
+  if (lead.toiletCount !== null) rows.push(["Anzahl Toiletten", String(lead.toiletCount)]);
+  if (lead.industrialDetails) rows.push(["Angaben zur Industriereinigung", lead.industrialDetails]);
+  if (lead.crimeDetails) rows.push(["Angaben zur Tatortreinigung", lead.crimeDetails]);
+
   if (lead.currentAmount !== null) {
     rows.push(["Aktueller Betrag", formatDecimal(lead.currentAmount) + " €"]);
   }

@@ -29,13 +29,36 @@ async function sendLead(data) {
   const processingView = document.querySelector('#processing-view');
   const successView = document.querySelector('#success-view');
   const processItems = [...document.querySelectorAll('.lf-processing-list li')];
+  const isCommercialPage = document.body.classList.contains('commercial-page');
   const stepNames = ['Reinigungsbedarf', 'Eckdaten', 'Kontaktdaten'];
   let currentStep = 1;
   let submitting = false;
   let leadData = {};
 
   function wantsToSpecifyAmount() {
-    return form.elements.currentCost.value === 'Ja, ich möchte meinen monatlichen Betrag angeben';
+    return ['Ja, ich möchte meinen monatlichen Betrag angeben', 'Ja, ich möchte meinen Angebotspreis angeben'].includes(form.elements.currentCost.value);
+  }
+
+  function syncCommercialFields() {
+    if (!isCommercialPage) return;
+    const selected = new Set(new FormData(form).getAll('services'));
+    const rules = {
+      rooms: selected.has('Büroreinigung') || selected.has('Reinigung von Arztpraxen') || selected.has('Immobilienreinigung'),
+      toilets: selected.has('Immobilienreinigung'),
+      industrial: selected.has('Industriereinigung'),
+      crime: selected.has('Tatortreinigung')
+    };
+    document.querySelectorAll('[data-commercial-detail]').forEach(group => {
+      const visible = Boolean(rules[group.dataset.commercialDetail]);
+      group.hidden = !visible;
+      const input = group.querySelector('input, textarea');
+      input.disabled = !visible;
+      input.required = visible;
+      if (!visible) {
+        input.value = '';
+        setError(input.name, '');
+      }
+    });
   }
 
   function syncAmountField() {
@@ -61,6 +84,10 @@ async function sendLead(data) {
       services: fields.getAll('services'),
       postalCode: String(fields.get('postalCode') || '').trim(),
       size: parsePositiveDecimal(fields.get('size')), // Objektgröße in Quadratmetern
+      roomCount: fields.get('roomCount') ? Number(fields.get('roomCount')) : null,
+      toiletCount: fields.get('toiletCount') !== null && fields.get('toiletCount') !== '' ? Number(fields.get('toiletCount')) : null,
+      industrialDetails: String(fields.get('industrialDetails') || '').trim(),
+      crimeDetails: String(fields.get('crimeDetails') || '').trim(),
       frequency: fields.get('frequency'),
       currentCost: fields.get('currentCost') || 'Möchte ich nicht angeben',
       currentAmount: wantsToSpecifyAmount() ? parsePositiveDecimal(fields.get('currentAmount')) : null,
@@ -90,7 +117,14 @@ async function sendLead(data) {
     if (step === 1) errors.services = data.services.length ? '' : 'Bitte wählen Sie mindestens eine Reinigungsleistung aus.';
     if (step === 2) {
       errors.postalCode = /^\d{5}$/.test(data.postalCode) ? '' : 'Bitte geben Sie eine fünfstellige deutsche PLZ ein.';
-      errors.size = data.size !== null ? '' : 'Bitte geben Sie die Objektgröße in m² als Zahl größer als 0 mit höchstens zwei Nachkommastellen ein, z. B. 250 oder 250,50.';
+      const hasCommercialRoomType = data.services.some(service => ['Büroreinigung', 'Reinigung von Arztpraxen', 'Immobilienreinigung'].includes(service));
+      const hasIndustrial = data.services.includes('Industriereinigung');
+      const hasCrime = data.services.includes('Tatortreinigung');
+      if (!isCommercialPage || !hasCommercialRoomType && !hasIndustrial && !hasCrime) errors.size = data.size !== null ? '' : 'Bitte geben Sie die Objektgröße in m² als Zahl größer als 0 ein.';
+      if (isCommercialPage && hasCommercialRoomType) errors.roomCount = Number.isInteger(data.roomCount) && data.roomCount > 0 ? '' : 'Bitte geben Sie die Anzahl der Räume an.';
+      if (isCommercialPage && data.services.includes('Immobilienreinigung')) errors.toiletCount = Number.isInteger(data.toiletCount) && data.toiletCount >= 0 ? '' : 'Bitte geben Sie die Anzahl der Toiletten an (0 ist möglich).';
+      if (isCommercialPage && hasIndustrial) errors.industrialDetails = data.industrialDetails.length >= 5 ? '' : 'Bitte beschreiben Sie kurz, was gereinigt werden soll.';
+      if (isCommercialPage && hasCrime) errors.crimeDetails = data.crimeDetails.length >= 5 ? '' : 'Bitte beschreiben Sie kurz den Umfang der Tatortreinigung.';
       errors.frequency = data.frequency ? '' : 'Bitte wählen Sie die gewünschte Häufigkeit aus.';
       errors.currentAmount = wantsToSpecifyAmount() && data.currentAmount === null
         ? 'Bitte geben Sie einen Betrag größer als 0 mit höchstens zwei Nachkommastellen ein, z. B. 450,00.' : '';
@@ -129,7 +163,12 @@ async function sendLead(data) {
   function renderSummary(data) {
     const summary = document.querySelector('#lead-summary');
     summary.replaceChildren();
-    for (const [label, value] of [['Leistungsart', data.services.join(', ')], ['PLZ', data.postalCode], ['Objektgröße', `${data.size.toLocaleString('de-DE', { maximumFractionDigits: 2 })} m²`], ['Häufigkeit', data.frequency]]) {
+    const summaryRows = [['Leistungsart', data.services.join(', ')], ['PLZ', data.postalCode]];
+    if (data.roomCount !== null) summaryRows.push(['Räume', String(data.roomCount)]);
+    if (data.toiletCount !== null) summaryRows.push(['Toiletten', String(data.toiletCount)]);
+    if (data.size !== null) summaryRows.push(['Objektgröße', `${data.size.toLocaleString('de-DE', { maximumFractionDigits: 2 })} m²`]);
+    summaryRows.push(['Häufigkeit', data.frequency]);
+    for (const [label, value] of summaryRows) {
       const row = document.createElement('div');
       const term = document.createElement('dt');
       const description = document.createElement('dd');
@@ -163,6 +202,7 @@ async function sendLead(data) {
   });
   form.addEventListener('change', event => {
     if (event.target.name === 'currentCost') syncAmountField();
+    if (event.target.name === 'services') syncCommercialFields();
     collectData();
   });
   backButton.addEventListener('click', () => {
@@ -215,5 +255,6 @@ async function sendLead(data) {
     showStep(1);
   });
   syncAmountField();
+  syncCommercialFields();
   showStep(1, false);
 })();
